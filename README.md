@@ -1,1 +1,1 @@
-# vim-ansible-doc
+# ansible-doc.vim
