@@ -22,3 +22,19 @@
 " }}}
 "==============================================================================
 
+
+if exists('g:loaded_ansible_doc')
+    finish
+endif
+
+if !exists('g:ansible_doc_split_size')
+    let g:ansible_doc_split_size = ''
+endif
+
+if !exists('g:ansible_doc_split_horizontal')
+    let g:ansible_doc_split_horizontal = 1
+endif
+
+" Map :AnsibleDoc command to ansibledoc#AnsibleDoc() function
+command! -nargs=* AnsibleDoc call ansibledoc#AnsibleDoc(<f-args>)
+command! -nargs=* AnsibleDocCursor call ansibledoc#AnsibleDoc(expand('<cword>'))
