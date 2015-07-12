@@ -23,8 +23,42 @@
 "==============================================================================
 
 
-function! ansibledoc#AnsibleDoc(...)
+let s:ansible_doc_buf_count = 0
 
+
+function! ansibledoc#AnsibleDoc(...)
+    let l:result=ansibledoc#GetQueryResult(a:000)
+
+    if (&filetype != 'ansible-doc')
+        let l:cur_winnr = winnr()
+        execute 'normal! \<C-W>b'
+        if (winnr() > 1)
+            execute 'normal! ' . l:cur_winnr . '\<C-W>w'
+            while 1
+                if (&filetype == 'ansible-doc')
+                    break
+                endif
+                execute 'normal! \<C-W>w'
+                if (l:cur_winnr ==# winnr())
+                    break
+                endif
+            endwhile
+        endif
+
+        if (&filetype != 'ansible-doc')
+            if (g:ansible_doc_split_horizontal ==# 1)
+                silent! execute g:ansible_doc_split_size . 'sp ansible-doc.vim' . s:ansible_doc_buf_count
+            else
+                silent! execute g:ansible_doc_split_size . 'vsp ansible-doc.vim' . s:ansible_doc_buf_count
+            endif
+        endif
+    endif
+
+    silent execute '1,$d'
+    setlocal noswapfile readonly number relativenumber filetype=ansible-doc
+    setlocal nobuflisted buftype=nofile bufhidden=hide
+    silent! 1s/^/\=l:result/
+    1
 endfunction
 
 
@@ -63,4 +97,33 @@ endfunction
 " endfunction
 
 
+function! ansibledoc#GetQueryResult(...)
+    if (empty(a:000))
+        let l:args_str = ''
+    else
+        let l:args_str_escaped = map(copy(a:000), 'shellescape(v:val)')
+        let l:args_str = join(l:args_str_escaped, ' ')
+    endif
 
+    " return split(system('ansible-doc ' . l:args_str), '\n')
+    return system('ansible-doc ' . l:args_str)
+endfunction
+
+
+" function! stardict#GetDefinition(...)
+"     if s:SetPythonPath() != 1
+"         return "Cannot set ${PATH} variable!"
+"     endif
+"
+"     let l:argsStr = join(a:000, '\\ ')
+"
+"     if has('python3')
+"         python3 definition = GetDefinitionInner(vim.eval('a:000'))
+"         let l:definition = py3eval('definition')
+"     elseif has('python')
+"         python definition = GetDefinitionInner(vim.eval('a:000'))
+"         let l:definition = pyeval('definition')
+"     endif
+"
+"     return l:definition
+" endfunction
