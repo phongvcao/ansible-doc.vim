@@ -3,32 +3,36 @@
 - Makes ansible-doc.vim behaves like pydoc.vim, vim-perldoc, vim-superman,
 letting users view documentation for Ansible's modules inside Vim.
 
-- The plugin highlights the search term of the users when showing the
-ansible-doc
-
-- The plugin is written purely in VimScript
-
 - The plugin has no colorization of output for Bash/Zsh (in other words, just
 jump straight into Vim when viewing the ansible-doc, because ansible-doc is
 specifically used by programmers, so just having Vim-viewing mode instead of
 both Bash/Zsh and Vim-viewing makes more sense than vim-stardict)
 
-- When issuing ansibledoc on the shell (Bash/Zsh), the doc is opened inside Vim
+- When issuing "ansibledoc" (no hyphen) on the shell (Bash/Zsh), the doc is
+opened inside Vim. User can do alias "ansible-doc"="ansibledoc" to make all
+ansible-doc command's results opened in Vim.
 
-- Also allows viewing ansible-doc for word under cursor
+- The plugin supports all commands of ansible-doc, including:
++ AnsibleDocList (ansible-doc --list)
++ AnsibleDocSnippet (ansible-doc --snippet)
+
++ let g:ansible_module_path=...
++ :AnsibleDoc when pressing Tab will present suggestion/autocompletion of module
+names
+
+- The plugin highlights the search term of the users when showing the
+ansible-doc
 
 - The plugin takes advantage of yaml highlighting from vim-ansible-yaml, and
 thus dependent on vim-ansible-yaml (we will have to source vim-ansible-yaml
 somehow and/or set filetype=ansible for the doc)
 
-- The plugin supports all commands of ansible-doc, including:
-+ AnsibleDocList (ansible-doc --list)
-+ AnsibleDocSnippet (ansible-doc --snippet)
-+ AnsibleDocCursor looks for ansible-doc of the word under the cursor
-
-+ let g:ansible_module_path=...
-+ AnsibleDoc when pressing Tab will present suggestion/autocompletion of module
-names
-
 
 2. DONE:
+
+- The plugin is written purely in VimScript
+
+- Also allows viewing ansible-doc for word under cursor
+
+- The plugin supports all commands of ansible-doc, including:
++ AnsibleDocCursor looks for ansible-doc of the word under the cursor

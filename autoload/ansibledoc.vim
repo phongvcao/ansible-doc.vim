@@ -98,16 +98,31 @@ endfunction
 
 
 function! ansibledoc#GetQueryResult(...)
+    let l:snippet_parameter = ' --snippet '
+
     if (empty(a:000))
         let l:args_str = ''
+    elseif (index(a:000[0], '--list') >= 0)
+        let l:snippet_parameter = ''
     else
         " let l:args_str_escaped = map(copy(a:000), 'shellescape(v:val)')
         " let l:args_str = join(l:args_str_escaped, ' ')
         let l:args_str = join(a:000[0], ' ')
     endif
 
+    let l:snippet_result = ''
+    if !empty(l:snippet_parameter)
+        let l:snippet_result = 'SNIPPET:' . "\n"
+        let l:snippet_result .= system('ansible-doc' . l:snippet_parameter . l:args_str)
+    endif
+
     " return split(system('ansible-doc ' . l:args_str), '\n')
-    return system('ansible-doc ' . l:args_str)
+    return system('ansible-doc ' . l:args_str) . l:snippet_result
+endfunction
+
+
+function! ansibledoc#FormatStr(...)
+
 endfunction
 
 

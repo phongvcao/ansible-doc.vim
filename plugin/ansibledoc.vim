@@ -38,3 +38,4 @@ endif
 " Map :AnsibleDoc command to ansibledoc#AnsibleDoc() function
 command! -nargs=* AnsibleDoc call ansibledoc#AnsibleDoc(<f-args>)
 command! -nargs=* AnsibleDocCursor call ansibledoc#AnsibleDoc(expand('<cword>'))
+command! -nargs=* AnsibleDocList call ansibledoc#AnsibleDoc('--list')
