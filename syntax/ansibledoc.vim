@@ -1,5 +1,5 @@
 "==============================================================================
-" FILE: syntax/ansible-doc.vim
+" FILE: syntax/ansibledoc.vim
 " AUTHOR: Phong V. Cao <phongvcao@phongvcao.com>
 " License: MIT license {{{
 " Permission is hereby granted, free of charge, to any person obtaining a copy

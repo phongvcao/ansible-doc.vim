@@ -1,5 +1,5 @@
 "==============================================================================
-" FILE: autoload/ansible-doc.vim
+" FILE: autoload/ansibledoc.vim
 " AUTHOR: Phong V. Cao <phongvcao@phongvcao.com>
 " License: MIT license {{{
 " Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,19 +23,19 @@
 "==============================================================================
 
 
-let s:ansible_doc_buf_count = 0
+let s:ansibledoc_buf_count = 0
 
 
 function! ansibledoc#AnsibleDoc(...)
     let l:result=ansibledoc#GetQueryResult(a:000)
 
-    if (&filetype != 'ansible-doc')
+    if (&filetype != 'ansibledoc')
         let l:cur_winnr = winnr()
         execute 'normal! \<C-W>b'
         if (winnr() > 1)
             execute 'normal! ' . l:cur_winnr . '\<C-W>w'
             while 1
-                if (&filetype == 'ansible-doc')
+                if (&filetype == 'ansibledoc')
                     break
                 endif
                 execute 'normal! \<C-W>w'
@@ -45,17 +45,17 @@ function! ansibledoc#AnsibleDoc(...)
             endwhile
         endif
 
-        if (&filetype != 'ansible-doc')
-            if (g:ansible_doc_split_horizontal ==# 1)
-                silent! execute g:ansible_doc_split_size . 'sp ansible-doc.vim' . s:ansible_doc_buf_count
+        if (&filetype != 'ansibledoc')
+            if (g:ansibledoc_split_horizontal ==# 1)
+                silent! execute g:ansibledoc_split_size . 'sp ansibledoc.vim' . s:ansibledoc_buf_count
             else
-                silent! execute g:ansible_doc_split_size . 'vsp ansible-doc.vim' . s:ansible_doc_buf_count
+                silent! execute g:ansibledoc_split_size . 'vsp ansibledoc.vim' . s:ansibledoc_buf_count
             endif
         endif
     endif
 
     silent execute '1,$d'
-    setlocal noswapfile readonly number relativenumber filetype=ansible-doc
+    setlocal noswapfile readonly number relativenumber filetype=ansibledoc
     setlocal nobuflisted buftype=nofile bufhidden=hide
     silent! 1s/^/\=l:result/
     1
@@ -101,8 +101,9 @@ function! ansibledoc#GetQueryResult(...)
     if (empty(a:000))
         let l:args_str = ''
     else
-        let l:args_str_escaped = map(copy(a:000), 'shellescape(v:val)')
-        let l:args_str = join(l:args_str_escaped, ' ')
+        " let l:args_str_escaped = map(copy(a:000), 'shellescape(v:val)')
+        " let l:args_str = join(l:args_str_escaped, ' ')
+        let l:args_str = join(a:000[0], ' ')
     endif
 
     " return split(system('ansible-doc ' . l:args_str), '\n')

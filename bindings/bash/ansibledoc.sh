@@ -1,5 +1,5 @@
 #==============================================================================
-# FILE: bindings/bash/ansible-doc.sh
+# FILE: bindings/bash/ansibledoc.sh
 # AUTHOR: Phong V. Cao <phongvcao@phongvcao.com>
 # License: MIT license {{{
 # Permission is hereby granted, free of charge, to any person obtaining a copy

@@ -1,5 +1,5 @@
 "==============================================================================
-" FILE: plugin/ansible-doc.vim
+" FILE: plugin/ansibledoc.vim
 " AUTHOR: Phong V. Cao <phongvcao@phongvcao.com>
 " License: MIT license {{{
 " Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,16 +23,16 @@
 "==============================================================================
 
 
-if exists('g:loaded_ansible_doc')
+if exists('g:loaded_ansibledoc')
     finish
 endif
 
-if !exists('g:ansible_doc_split_size')
-    let g:ansible_doc_split_size = ''
+if !exists('g:ansibledoc_split_size')
+    let g:ansibledoc_split_size = ''
 endif
 
-if !exists('g:ansible_doc_split_horizontal')
-    let g:ansible_doc_split_horizontal = 1
+if !exists('g:ansibledoc_split_horizontal')
+    let g:ansibledoc_split_horizontal = 1
 endif
 
 " Map :AnsibleDoc command to ansibledoc#AnsibleDoc() function

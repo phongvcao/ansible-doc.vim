@@ -1,5 +1,5 @@
 #==============================================================================
-# FILE: bindings/zsh/ansible-doc.zsh
+# FILE: bindings/zsh/ansibledoc.zsh
 # AUTHOR: Phong V. Cao <phongvcao@phongvcao.com>
 # License: MIT license {{{
 # Permission is hereby granted, free of charge, to any person obtaining a copy
