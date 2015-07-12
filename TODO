@@ -27,6 +27,9 @@ ansible-doc
 thus dependent on vim-ansible-yaml (we will have to source vim-ansible-yaml
 somehow and/or set filetype=ansible for the doc)
 
+- Make output of ansible-doc snippet adheres to the textwidth settings of the
+user (may have to use less?)
+
 
 2. DONE:
 
