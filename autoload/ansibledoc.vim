@@ -98,26 +98,22 @@ endfunction
 
 
 function! ansibledoc#GetQueryResult(...)
-    let l:snippet_parameter = ' --snippet '
+    let l:args_str = ''
+    let l:snippet_result = ''
 
-    if (empty(a:000))
-        let l:args_str = ''
-    elseif (index(a:000[0], '--list') >= 0)
-        let l:snippet_parameter = ''
+    " If there were no argument issued
+    " Show ansible-doc --list
+    if (empty(a:000[0]))
+        let l:args_str = '--list'
     else
-        " let l:args_str_escaped = map(copy(a:000), 'shellescape(v:val)')
-        " let l:args_str = join(l:args_str_escaped, ' ')
+        " If this is a simple ansible-doc --list command, there is no need to
+        " query --snippet
+        " ElseIf this is a ansible-doc <module> command, we need to query
+        " --snippet
         let l:args_str = join(a:000[0], ' ')
     endif
 
-    let l:snippet_result = ''
-    if !empty(l:snippet_parameter)
-        let l:snippet_result = 'SNIPPET:' . "\n"
-        let l:snippet_result .= system('ansible-doc' . l:snippet_parameter . l:args_str)
-    endif
-
-    " return split(system('ansible-doc ' . l:args_str), '\n')
-    return system('ansible-doc ' . l:args_str) . l:snippet_result
+    return system('ansible-doc ' . l:args_str)
 endfunction
 
 
