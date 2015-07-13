@@ -29,13 +29,13 @@ let s:ansibledoc_buf_count = 0
 function! ansibledoc#AnsibleDoc(...)
     let l:result=ansibledoc#GetQueryResult(a:000)
 
-    if (&filetype != 'ansibledoc.ansible.yaml')
+    if (&filetype != 'ansibledoc.ansible')
         let l:cur_winnr = winnr()
         execute 'normal! \<C-W>b'
         if (winnr() > 1)
             execute 'normal! ' . l:cur_winnr . '\<C-W>w'
             while 1
-                if (&filetype == 'ansibledoc.ansible.yaml')
+                if (&filetype == 'ansibledoc.ansible')
                     break
                 endif
                 execute 'normal! \<C-W>w'
@@ -45,7 +45,7 @@ function! ansibledoc#AnsibleDoc(...)
             endwhile
         endif
 
-        if (&filetype != 'ansibledoc.ansible.yaml')
+        if (&filetype != 'ansibledoc.ansible')
             if (g:ansibledoc_split_horizontal ==# 1)
                 silent! execute g:ansibledoc_split_size . 'sp ansibledoc.vim' . s:ansibledoc_buf_count
             else
@@ -55,7 +55,7 @@ function! ansibledoc#AnsibleDoc(...)
     endif
 
     silent execute '1,$d'
-    setlocal noswapfile readonly number relativenumber filetype=ansibledoc.ansible.yaml
+    setlocal noswapfile readonly number relativenumber filetype=ansibledoc.ansible
     setlocal nobuflisted buftype=nofile bufhidden=hide
     silent! 1s/^/\=l:result/
     1
@@ -109,12 +109,16 @@ function! ansibledoc#GetQueryResult(...)
         let l:args_str = join(a:000[0], ' ')
     endif
 
-    return system('ansible-doc ' . l:args_str)
+    return ansibledoc#FormatStr(system('ansible-doc ' . l:args_str))
 endfunction
 
 
 function! ansibledoc#FormatStr(...)
+    let l:final_str = substitute(a:000[0], 'Options', 'OPTIONS', "")
+    let l:final_str = substitute(l:final_str, 'Requirements:', "REQUIREMENTS:", "")
+    let l:final_str = substitute(l:final_str, 'EXAMPLES:', "EXAMPLE:", "")
 
+    return l:final_str
 endfunction
 
 

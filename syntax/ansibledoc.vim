@@ -22,3 +22,49 @@
 " }}}
 "=============================================================================
 
+
+if !exists("main_syntax")
+    if version < 600
+        syntax clear
+    elseif exists("b:current_syntax")
+        finish
+    endif
+    let main_syntax = 'ansibledoc'
+endif
+
+" Load YAML syntax
+source <sfile>:p:h/include/yaml.vim
+unlet b:current_syntax
+
+source <sfile>:p:h/include/jinja.vim
+unlet b:current_syntax
+
+syn case match
+
+syntax match ansibledocHeader "\v^\>.*"
+syntax match ansibledocSubHeader "\v^[A-Z][A-Z_0-9]*"
+syntax match ansibledocComment "\v^#.*"
+
+highlight link ansibledocHeader Error
+highlight link ansibledocSubHeader Statement
+highlight link ansibledocComment Comment
+
+let b:current_syntax = 'ansibledoc'
+
+if main_syntax == 'ansibledoc'
+    unlet main_syntax
+endif
+
+" syntax match stardictResult "\v^[A-Z].*"
+" syntax match stardictWord "\v^\@.*"
+" syntax match stardictWordType "\v^\*.*"
+" syntax match stardictWordMeaning "\v^[0-9].*"
+" syntax match stardictWordExample "\v^(    \-\s.*\:|\!.*|    \-\s.*)"
+" syntax match stardictDictName "\v^\@[^/]*\:[^/]*"
+"
+" highlight link stardictResult Special
+" highlight link stardictWord PreProc
+" highlight link stardictWordType Statement
+" highlight link stardictWordMeaning Identifier
+" highlight link stardictWordExample Type
+" highlight link stardictDictName Underlined

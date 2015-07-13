@@ -30,6 +30,11 @@ somehow and/or set filetype=ansible for the doc)
 - Make output of ansible-doc snippet adheres to the textwidth settings of the
 user (may have to use less?)
 
+- For mixing syntax files, look into:
++ vim-ansible-yaml/syntax/
++ http://vim.wikia.com/wiki/Different_syntax_highlighting_within_regions_of_a_file
++ https://groups.google.com/forum/#!topic/comp.editors/jBUVssPb_G8
+
 
 2. DONE:
 
