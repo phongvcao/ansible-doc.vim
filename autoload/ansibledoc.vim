@@ -29,13 +29,13 @@ let s:ansibledoc_buf_count = 0
 function! ansibledoc#AnsibleDoc(...)
     let l:result=ansibledoc#GetQueryResult(a:000)
 
-    if (&filetype != 'ansibledoc')
+    if (&filetype != 'ansibledoc.ansible.yaml')
         let l:cur_winnr = winnr()
         execute 'normal! \<C-W>b'
         if (winnr() > 1)
             execute 'normal! ' . l:cur_winnr . '\<C-W>w'
             while 1
-                if (&filetype == 'ansibledoc')
+                if (&filetype == 'ansibledoc.ansible.yaml')
                     break
                 endif
                 execute 'normal! \<C-W>w'
@@ -45,7 +45,7 @@ function! ansibledoc#AnsibleDoc(...)
             endwhile
         endif
 
-        if (&filetype != 'ansibledoc')
+        if (&filetype != 'ansibledoc.ansible.yaml')
             if (g:ansibledoc_split_horizontal ==# 1)
                 silent! execute g:ansibledoc_split_size . 'sp ansibledoc.vim' . s:ansibledoc_buf_count
             else
@@ -55,7 +55,7 @@ function! ansibledoc#AnsibleDoc(...)
     endif
 
     silent execute '1,$d'
-    setlocal noswapfile readonly number relativenumber filetype=ansibledoc
+    setlocal noswapfile readonly number relativenumber filetype=ansibledoc.ansible.yaml
     setlocal nobuflisted buftype=nofile bufhidden=hide
     silent! 1s/^/\=l:result/
     1
@@ -106,10 +106,6 @@ function! ansibledoc#GetQueryResult(...)
     if (empty(a:000[0]))
         let l:args_str = '--list'
     else
-        " If this is a simple ansible-doc --list command, there is no need to
-        " query --snippet
-        " ElseIf this is a ansible-doc <module> command, we need to query
-        " --snippet
         let l:args_str = join(a:000[0], ' ')
     endif
 
